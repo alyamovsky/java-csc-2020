@@ -1,7 +1,12 @@
+import edu.TestCase;
 import edu.lesson1.syntax.OverflowException;
 import edu.lesson1.syntax.PrimitiveToolbox;
 
 void main() {
+    lesson1();
+}
+
+private static void lesson1() {
     var toolbox = new PrimitiveToolbox();
 
     TestCase.assertEquals(toolbox.parseStringLiteral("5"), 5);
@@ -16,33 +21,10 @@ void main() {
     TestCase.assertEquals(toolbox.parseStringLiteral("0777"), 511);
 
     TestCase.assertException(OverflowException.class, () -> toolbox.safeAdd(Long.MAX_VALUE, 1));
-}
 
-static class TestCase {
-    public static <T> void assertEquals(T actual, T expected) {
-        try {
-            assert actual.equals(expected);
-        } catch (AssertionError exception) {
-            System.out.println("Actual: (" + actual.getClass() + ") " + actual);
-            System.out.println("Expected: (" + expected.getClass() + ") " + expected);
-        }
-    }
+    System.out.println(toolbox.machineEpsilon());
 
-    public static <T> void assertException(Class<? extends Throwable> exceptionClass, Callable<T> function) {
-        try {
-            function.call();
-        } catch (Throwable exception) {
-            try {
-                assert exceptionClass.isInstance(exception);
-            } catch (AssertionError assertException) {
-                System.out.println("Assert exception error:");
-                System.out.println("Actual: " + exception.getClass());
-                System.out.println("Expected: " + exceptionClass);
-            }
-
-            return;
-        }
-
-        throw new AssertionError("Exception has not been thrown");
-    }
+    TestCase.assertEquals(toolbox.codePoints("Hello, world! 😃").length, 15);
+    TestCase.assertEquals(toolbox.isPalindrome("Hello, world! 😃"), false);
+    TestCase.assertEquals(toolbox.isPalindrome("wow 😃 wow"), true);
 }

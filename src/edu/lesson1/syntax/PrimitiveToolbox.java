@@ -30,4 +30,38 @@ public class PrimitiveToolbox {
             throw new OverflowException();
         }
     }
+
+    public double machineEpsilon() {
+        var value = 0.01;
+
+        while (value + 1.0 != 1.0) {
+            value /= 2;
+        }
+
+        return value;
+    }
+
+    public int[] codePoints(String input) {
+        var codePointsCount = input.codePointCount(0, input.length());
+        int[] result = new int[codePointsCount];
+        for (int i = 0, j = 0; j < input.length(); i++) {
+            var codePoint = input.codePointAt(j);
+            j += Character.charCount(codePoint);
+            result[i] = codePoint;
+        }
+
+        return result;
+    }
+
+    public boolean isPalindrome(String input) {
+        var codePoints = codePoints(input);
+
+        for (int i = 0, j = codePoints.length - 1; i < codePoints.length; i++, j--) {
+            if (codePoints[i] != codePoints[j]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
