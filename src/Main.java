@@ -18,6 +18,7 @@ private static void lesson1() {
     TestCase.assertEquals(toolbox.parseStringLiteral("-0b101"), -5);
     TestCase.assertEquals(toolbox.parseStringLiteral("-0b1_0_1"), -5);
     TestCase.assertEquals(toolbox.parseStringLiteral("0x64"), 100);
+    TestCase.assertEquals(toolbox.parseStringLiteral("0xCAFE"), 51966);
     TestCase.assertEquals(toolbox.parseStringLiteral("0777"), 511);
 
     TestCase.assertException(OverflowException.class, () -> toolbox.safeAdd(Long.MAX_VALUE, 1));
