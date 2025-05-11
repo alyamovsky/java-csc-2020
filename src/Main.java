@@ -7,6 +7,8 @@ import edu.lesson2.objects.Point;
 import edu.lesson2.objects.named.Group;
 import edu.lesson2.objects.named.Named;
 import edu.lesson2.objects.named.User;
+import edu.lesson3.Axis;
+import edu.lesson3.ImmutableVector;
 
 void main() {
     lesson1();
@@ -18,49 +20,50 @@ void main() {
 private static void lesson1() {
     var toolbox = new PrimitiveToolbox();
 
-    TestCase.assertEquals(toolbox.parseStringLiteral("5"), 5);
-    TestCase.assertEquals(toolbox.parseStringLiteral("55"), 55);
-    TestCase.assertEquals(toolbox.parseStringLiteral("+55"), 55);
-    TestCase.assertEquals(toolbox.parseStringLiteral("-55"), -55);
-    TestCase.assertEquals(toolbox.parseStringLiteral("55_5"), 555);
-    TestCase.assertEquals(toolbox.parseStringLiteral("0b101"), 5);
-    TestCase.assertEquals(toolbox.parseStringLiteral("-0b101"), -5);
-    TestCase.assertEquals(toolbox.parseStringLiteral("-0b1_0_1"), -5);
-    TestCase.assertEquals(toolbox.parseStringLiteral("0x64"), 100);
-    TestCase.assertEquals(toolbox.parseStringLiteral("0xCAFE"), 51966);
-    TestCase.assertEquals(toolbox.parseStringLiteral("0777"), 511);
+    TestCase.assertEquals(5, toolbox.parseStringLiteral("5"));
+    TestCase.assertEquals(55, toolbox.parseStringLiteral("55"));
+    TestCase.assertEquals(55, toolbox.parseStringLiteral("+55"));
+    TestCase.assertEquals(-55, toolbox.parseStringLiteral("-55"));
+    TestCase.assertEquals(555, toolbox.parseStringLiteral("55_5"));
+    TestCase.assertEquals(5, toolbox.parseStringLiteral("0b101"));
+    TestCase.assertEquals(-5, toolbox.parseStringLiteral("-0b101"));
+    TestCase.assertEquals(-5, toolbox.parseStringLiteral("-0b1_0_1"));
+    TestCase.assertEquals(100, toolbox.parseStringLiteral("0x64"));
+    TestCase.assertEquals(51966, toolbox.parseStringLiteral("0xCAFE"));
+    TestCase.assertEquals(511, toolbox.parseStringLiteral("0777"));
 
     TestCase.assertException(OverflowException.class, () -> toolbox.safeAdd(Long.MAX_VALUE, 1));
 
     System.out.println(toolbox.machineEpsilon());
 
-    TestCase.assertEquals("Hello, world! 😃".length(), 16);
-    TestCase.assertEquals(toolbox.codePoints("Hello, world! 😃").length, 15);
-    TestCase.assertEquals(toolbox.isPalindrome("Hello, world! 😃"), false);
-    TestCase.assertEquals(toolbox.isPalindrome("wow 😃 wow"), true);
+    TestCase.assertEquals(16, "Hello, world! 😃".length());
+    TestCase.assertEquals(15, toolbox.codePoints("Hello, world! 😃").length);
+    TestCase.assertEquals(false, toolbox.isPalindrome("Hello, world! 😃"));
+    TestCase.assertEquals(true, toolbox.isPalindrome("wow 😃 wow"));
 }
 
 private static void lesson2() {
-    TestCase.assertEquals(3 + 4 * 5 >> 1 & ~2 + 1, 10);
+    TestCase.assertEquals(10, 3 + 4 * 5 >> 1 & ~2 + 1);
 
     var lesson2 = new Lesson2();
-    TestCase.assertEquals(lesson2.route(1), "CREATE");
-    TestCase.assertEquals(lesson2.route(3), "UPDATE");
-    TestCase.assertEquals(lesson2.route(5), "DELETE");
-    TestCase.assertEquals(lesson2.route(10), "UNKNOWN(10)");
+    TestCase.assertEquals("CREATE", lesson2.route(1));
+    TestCase.assertEquals("UPDATE", lesson2.route(3));
+    TestCase.assertEquals("DELETE", lesson2.route(5));
+    TestCase.assertEquals("UNKNOWN(10)", lesson2.route(10));
 
-    TestCase.assertEquals(new Point(2, 3).getX(), 2);
-    TestCase.assertEquals(new Point(2, 3).getY(), 3);
+    TestCase.assertEquals(2, new Point(2, 3).getX());
+    TestCase.assertEquals(3, new Point(2, 3).getY());
+
     var point1 = new Point(2, 3);
     var point2 = point1.withY(3);
-    TestCase.assertEquals(point1.equals(point2), true);
-    TestCase.assertEquals(point1 == point2, false);
+    TestCase.assertEquals(true, point1.equals(point2));
+    TestCase.assertEquals(false, point1 == point2);
 
     lesson2.process((int) Instant.now().getEpochSecond(), "Test");
 
     Car car = Car.builder().length(5.5).color("brown").build();
-    TestCase.assertEquals(car.length, 5.5);
-    TestCase.assertEquals(car.color, "brown");
+    TestCase.assertEquals(5.5, car.length);
+    TestCase.assertEquals("brown", car.color);
 
     Named user = new User("John");
     user.print();
