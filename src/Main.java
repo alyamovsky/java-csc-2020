@@ -13,6 +13,7 @@ import edu.lesson3.ImmutableVector;
 void main() {
     lesson1();
     lesson2();
+    lesson3();
 
     System.out.println(TestCase.getStats());
 }
@@ -69,4 +70,24 @@ private static void lesson2() {
     user.print();
     var group = new Group("support");
     group.print();
+}
+
+private static void lesson3() {
+    var zeroV1 = ImmutableVector.of(0, 0, 0);
+    var zeroV2 = ImmutableVector.of(0, 0, 0);
+    TestCase.assertEquals(zeroV1, zeroV2);
+    TestCase.assertSame(zeroV1, zeroV2);
+    var xV1 = ImmutableVector.of(1, 0, 0);
+    var xV2 = ImmutableVector.of(1, 0, 0);
+    TestCase.assertEquals(xV1, xV2);
+    TestCase.assertSame(xV1, xV2);
+    TestCase.assertEquals(xV1.toString(), "(1.000, 0.000, 0.000)");
+
+    TestCase.assertSame(Axis.X, Axis.closest(ImmutableVector.of(3, 5, 7)));
+    TestCase.assertSame(Axis.X, Axis.closest(ImmutableVector.of(-3, 5, 7)));
+    TestCase.assertSame(Axis.Y, Axis.closest(ImmutableVector.of(7, 5, 7)));
+    TestCase.assertSame(Axis.Y, Axis.closest(ImmutableVector.of(7, 5, -7)));
+    TestCase.assertSame(Axis.Z, Axis.closest(ImmutableVector.of(17, 15, -7)));
+    TestCase.assertSame(Axis.Z, Axis.closest(ImmutableVector.of(17, 15, -7)));
+    TestCase.assertSame(Axis.NONE, Axis.closest(ImmutableVector.of(0, 0, 0)));
 }
