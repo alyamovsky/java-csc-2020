@@ -7,16 +7,7 @@ import edu.lesson2.objects.Point;
 import edu.lesson2.objects.named.Group;
 import edu.lesson2.objects.named.Named;
 import edu.lesson2.objects.named.User;
-import edu.lesson3.Axis;
-import edu.lesson3.ImmutableVector;
-
-void main() {
-    lesson1();
-    lesson2();
-    lesson3();
-
-    System.out.println(TestCase.getStats());
-}
+import edu.lesson3.*;
 
 private static void lesson1() {
     var toolbox = new PrimitiveToolbox();
@@ -90,4 +81,39 @@ private static void lesson3() {
     TestCase.assertSame(Axis.Z, Axis.closest(ImmutableVector.of(17, 15, -7)));
     TestCase.assertSame(Axis.Z, Axis.closest(ImmutableVector.of(17, 15, -7)));
     TestCase.assertSame(Axis.NONE, Axis.closest(ImmutableVector.of(0, 0, 0)));
+
+    var sortV1 = ImmutableVector.of(3, 5, 7);
+    var sortV2 = ImmutableVector.of(4, 4, 8);
+    var sortV3 = ImmutableVector.of(5, 3, 10);
+    var list = List.of(sortV1, sortV2, sortV3);
+    var sortedByX = VectorSorter.sortBy(list, VectorSorter.SortCriterion.X);
+    TestCase.assertSame(sortV1, sortedByX.getFirst());
+    TestCase.assertSame(sortV3, sortedByX.getLast());
+    var sortedByY = VectorSorter.sortBy(list, VectorSorter.SortCriterion.Y);
+    TestCase.assertSame(sortV3, sortedByY.getFirst());
+    TestCase.assertSame(sortV1, sortedByY.getLast());
+    var sortedByZ = VectorSorter.sortBy(list, VectorSorter.SortCriterion.Z);
+    TestCase.assertSame(sortV1, sortedByZ.getFirst());
+    TestCase.assertSame(sortV3, sortedByZ.getLast());
+
+    TestCase.assertSame(
+        "3F-80-00-00 40-00-00-00 40-40-00-00",
+        VectorFormatter.bytesToHuman(ImmutableVector.of(1, 2, 3), VectorFormatter.CoordinateOrder.XYZ)
+    );
+    TestCase.assertSame(
+        "40-40-00-00 40-00-00-00 3F-80-00-00",
+        VectorFormatterByteBuffer.bytesToHuman(ImmutableVector.of(1, 2, 3), VectorFormatter.CoordinateOrder.ZYX)
+    );
+    TestCase.assertSame(
+        "3F-80-00-00",
+        VectorFormatterByteBuffer.bytesToHuman(ImmutableVector.of(1, 2, 3), VectorFormatter.CoordinateOrder.X_ONLY)
+    );
+}
+
+void main() {
+    lesson1();
+    lesson2();
+    lesson3();
+
+    System.out.println(TestCase.getStats());
 }
