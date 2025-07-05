@@ -1,8 +1,11 @@
 package edu.lesson3;
 
 import java.util.Objects;
+import java.util.random.RandomGenerator;
 
 public class ImmutableVector {
+    private static final RandomGenerator RNG = RandomGenerator.getDefault();
+
     private static final ImmutableVector ZERO = new ImmutableVector(0, 0, 0);
     private static final ImmutableVector UNIT_X = new ImmutableVector(1, 0, 0);
     private static final ImmutableVector UNIT_Y = new ImmutableVector(0, 1, 0);
@@ -34,6 +37,14 @@ public class ImmutableVector {
         return new ImmutableVector(x, y, z);
     }
 
+    public static ImmutableVector random() {
+        return new ImmutableVector(
+            RNG.nextDouble(-Integer.MAX_VALUE, Integer.MAX_VALUE),
+            RNG.nextDouble(-Integer.MAX_VALUE, Integer.MAX_VALUE),
+            RNG.nextDouble(-Integer.MAX_VALUE, Integer.MAX_VALUE)
+        );
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof ImmutableVector that)) {
@@ -62,5 +73,9 @@ public class ImmutableVector {
     @Override
     public String toString() {
         return String.format("(%.3f, %.3f, %.3f)", x, y, z);
+    }
+
+    public int length() {
+        return this.toString().length();
     }
 }

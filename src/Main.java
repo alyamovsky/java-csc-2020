@@ -78,8 +78,8 @@ private static void lesson3() {
     TestCase.assertSame(Axis.X, Axis.closest(ImmutableVector.of(-3, 5, 7)));
     TestCase.assertSame(Axis.Y, Axis.closest(ImmutableVector.of(7, 5, 7)));
     TestCase.assertSame(Axis.Y, Axis.closest(ImmutableVector.of(7, 5, -7)));
-    TestCase.assertSame(Axis.Z, Axis.closest(ImmutableVector.of(17, 15, -7)));
-    TestCase.assertSame(Axis.Z, Axis.closest(ImmutableVector.of(17, 15, -7)));
+    TestCase.assertSame(Axis.Z, Axis.closest(ImmutableVector.of(17, -15, -7)));
+    TestCase.assertSame(Axis.Z, Axis.closest(ImmutableVector.of(-17, 15, -7)));
     TestCase.assertSame(Axis.NONE, Axis.closest(ImmutableVector.of(0, 0, 0)));
 
     var sortV1 = ImmutableVector.of(3, 5, 7);
@@ -96,18 +96,64 @@ private static void lesson3() {
     TestCase.assertSame(sortV1, sortedByZ.getFirst());
     TestCase.assertSame(sortV3, sortedByZ.getLast());
 
-    TestCase.assertSame(
+    TestCase.assertEquals(
         "3F-80-00-00 40-00-00-00 40-40-00-00",
         VectorFormatter.bytesToHuman(ImmutableVector.of(1, 2, 3), VectorFormatter.CoordinateOrder.XYZ)
     );
-    TestCase.assertSame(
+    TestCase.assertEquals(
         "40-40-00-00 40-00-00-00 3F-80-00-00",
         VectorFormatterByteBuffer.bytesToHuman(ImmutableVector.of(1, 2, 3), VectorFormatter.CoordinateOrder.ZYX)
     );
-    TestCase.assertSame(
+    TestCase.assertEquals(
         "3F-80-00-00",
         VectorFormatterByteBuffer.bytesToHuman(ImmutableVector.of(1, 2, 3), VectorFormatter.CoordinateOrder.X_ONLY)
     );
+
+    TestCase.assertEquals("1.000;0.000;-3.500", VectorStringUtils.toCsvLine(ImmutableVector.of(1, 0, -3.5)));
+    TestCase.assertEquals(Optional.of(ImmutableVector.of(1, 0, -3.5)), VectorStringUtils.fromCsvLine("1.000;0.000;-3.500"));
+    TestCase.assertEquals(
+        """
+            1.000;0.000;-3.500
+            2.000;1.000;-7.000
+            3.000;-15.000;2.500
+            """, VectorStringUtils.csvDump(List.of(
+                ImmutableVector.of(1, 0, -3.5),
+                ImmutableVector.of(2, 1, -7),
+                ImmutableVector.of(3, -15, 2.5)
+        )));
+        TestCase.assertEquals(
+        """
+            1.000;0.000;-3.500
+            2.000;1.000;-7.000
+            3.000;-15.000;2.500
+            """, VectorStringUtils.csvDumpStream(List.of(
+                ImmutableVector.of(1, 0, -3.5),
+                ImmutableVector.of(2, 1, -7),
+                ImmutableVector.of(3, -15, 2.5)
+        )));
+
+    VectorStringUtils.csvDump(
+        Stream
+            .generate(ImmutableVector::random)
+            .limit(1_000)
+            .collect(Collectors.toList())
+    );
+
+    VectorStringUtils.csvDumpStream(
+        Stream
+            .generate(ImmutableVector::random)
+            .limit(1_000)
+            .collect(Collectors.toList())
+    );
+
+    System.out.println(
+        VectorStringUtils.prettyTable(
+            Stream
+                .generate(ImmutableVector::random)
+                .limit(10)
+                .collect(Collectors.toList()
+            )
+    ));
 }
 
 void main() {
