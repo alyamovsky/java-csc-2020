@@ -1,4 +1,4 @@
-package edu.lesson3;
+package edu.lesson3.vector;
 
 public enum Axis implements VectorSupplier {
     X(1, 0, 0),

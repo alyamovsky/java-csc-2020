@@ -1,4 +1,4 @@
-package edu.lesson3;
+package edu.lesson3.vector;
 
 public class VectorFormatterBitwise implements VectorFormatter {
     public static String bytesToHuman(ImmutableVector v, CoordinateOrder order) {

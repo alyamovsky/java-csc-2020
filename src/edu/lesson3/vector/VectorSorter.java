@@ -1,4 +1,4 @@
-package edu.lesson3;
+package edu.lesson3.vector;
 
 import java.util.*;
 

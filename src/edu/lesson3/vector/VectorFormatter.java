@@ -1,4 +1,4 @@
-package edu.lesson3;
+package edu.lesson3.vector;
 
 public interface VectorFormatter {
     // what is the correct way of using static interface methods?
