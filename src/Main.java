@@ -8,6 +8,7 @@ import edu.lesson2.objects.named.Group;
 import edu.lesson2.objects.named.Named;
 import edu.lesson2.objects.named.User;
 import edu.lesson3.vector.*;
+import edu.lesson4.inventory.core.box.ImmutableBox;
 
 private static void lesson1() {
     var toolbox = new PrimitiveToolbox();
@@ -156,6 +157,11 @@ private static void lesson3() {
     ));
 }
 
+private static void lesson4() {
+    TestCase.assertEquals("Value=123", ImmutableBox.of(123).map(i -> "Value=" + i).get());
+    TestCase.assertEquals("Value=123", ImmutableBox.of(123).flatMap(i -> ImmutableBox.of("Value=" + i)).get());
+}
+
 void main(String[] args) {
     if (args.length < 1) {
         throw new RuntimeException("Specify lesson");
@@ -165,10 +171,12 @@ void main(String[] args) {
         case "lesson1", "syntax" -> lesson1();
         case "lesson2", "objects" -> lesson2();
         case "lesson3", "vector" -> lesson3();
+        case "lesson4" -> lesson4();
         case "all" -> {
             lesson1();
             lesson2();
             lesson3();
+            lesson4();
         }
     }
     System.out.println(TestCase.getStats());
