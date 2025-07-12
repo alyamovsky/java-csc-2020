@@ -9,6 +9,7 @@ import edu.lesson2.objects.named.Named;
 import edu.lesson2.objects.named.User;
 import edu.lesson3.vector.*;
 import edu.lesson4.inventory.core.box.ImmutableBox;
+import edu.lesson4.inventory.core.box.MutableBox;
 
 private static void lesson1() {
     var toolbox = new PrimitiveToolbox();
@@ -160,6 +161,8 @@ private static void lesson3() {
 private static void lesson4() {
     TestCase.assertEquals("Value=123", ImmutableBox.of(123).map(i -> "Value=" + i).get());
     TestCase.assertEquals("Value=123", ImmutableBox.of(123).flatMap(i -> ImmutableBox.of("Value=" + i)).get());
+
+    TestCase.assertEquals("bar", MutableBox.of("foo").set("bar").get());
 }
 
 void main(String[] args) {
@@ -168,10 +171,10 @@ void main(String[] args) {
     }
 
     switch (args[0]) {
-        case "lesson1", "syntax" -> lesson1();
-        case "lesson2", "objects" -> lesson2();
-        case "lesson3", "vector" -> lesson3();
-        case "lesson4" -> lesson4();
+        case "lesson1", "1", "syntax" -> lesson1();
+        case "lesson2", "2", "objects" -> lesson2();
+        case "lesson3", "3", "vector" -> lesson3();
+        case "lesson4", "4" -> lesson4();
         case "all" -> {
             lesson1();
             lesson2();
