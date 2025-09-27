@@ -2,15 +2,21 @@ package edu.lesson4.inventory.core.box;
 
 import java.util.function.Function;
 
-public class MutableBox <T> implements Box<T>{
-        private T value;
+public class MutableBox<T> implements Box<T> {
+    private T value;
+    private String label;
 
-    private MutableBox(T value) {
+    private MutableBox(T value, String label) {
         this.value = value;
+        this.label = label;
     }
 
     public static <T> MutableBox<T> of(T value) {
-        return new MutableBox<>(value);
+        return new MutableBox<>(value, "");
+    }
+
+    public static <T> MutableBox<T> of(T value, String label) {
+        return new MutableBox<>(value, label);
     }
 
     @Override
@@ -30,6 +36,11 @@ public class MutableBox <T> implements Box<T>{
         this.value = value;
 
         return this;
+    }
+
+    @Override
+    public String label() {
+        return this.label;
     }
 
     @Override

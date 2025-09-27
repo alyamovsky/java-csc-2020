@@ -11,5 +11,7 @@ public interface Box<T> {
 
     T get();
 
+    String label();
+
     T orElse(T value);
 }

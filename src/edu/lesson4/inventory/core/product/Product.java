@@ -1,7 +1,9 @@
 package edu.lesson4.inventory.core.product;
 
+import java.util.UUID;
+
 public interface Product {
-    String getId();
+    UUID getId();
 
     String getName();
 

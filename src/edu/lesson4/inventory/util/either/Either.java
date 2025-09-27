@@ -25,9 +25,7 @@ public sealed interface Either<L, R> permits Left, Right {
         return isRight() ? new Right<>(f.apply(right())) : (Either<L, R1>) this;
     }
 
-    /* 4. Проброс или возврат */
     default <X extends Throwable> R orElseThrow(java.util.function.Function<? super L, ? extends X> ex) throws X {
-        //return isRight() ? right() : throw ex.apply(left());
         if (isRight()) {
             return right();
         } else {

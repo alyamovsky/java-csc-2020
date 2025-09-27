@@ -4,13 +4,19 @@ import java.util.function.Function;
 
 public class ImmutableBox<T> implements Box<T> {
     private final T value;
+    private final String label;
 
-    private ImmutableBox(T value) {
+    private ImmutableBox(T value, String label) {
         this.value = value;
+        this.label = label;
     }
 
     public static <T> ImmutableBox<T> of(T value) {
-        return new ImmutableBox<>(value);
+        return new ImmutableBox<>(value, "");
+    }
+
+    public static <T> ImmutableBox<T> of(T value, String label) {
+        return new ImmutableBox<>(value, label);
     }
 
     @Override
@@ -21,6 +27,11 @@ public class ImmutableBox<T> implements Box<T> {
     @Override
     public T get() {
         return value;
+    }
+
+    @Override
+    public String label() {
+        return label;
     }
 
     @Override

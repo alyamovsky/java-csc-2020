@@ -10,6 +10,7 @@ import edu.lesson2.objects.named.User;
 import edu.lesson3.vector.*;
 import edu.lesson4.inventory.core.box.ImmutableBox;
 import edu.lesson4.inventory.core.box.MutableBox;
+import edu.lesson4.inventory.ui.Cli;
 
 private static void lesson1() {
     var toolbox = new PrimitiveToolbox();
@@ -104,58 +105,57 @@ private static void lesson3() {
     );
     TestCase.assertEquals(
         "40-40-00-00 40-00-00-00 3F-80-00-00",
-        VectorFormatterByteBuffer.bytesToHuman(ImmutableVector.of(1, 2, 3), VectorFormatter.CoordinateOrder.ZYX)
+        VectorFormatterByteBuffer.bytesToHuman(
+            ImmutableVector.of(1, 2, 3),
+            VectorFormatter.CoordinateOrder.ZYX
+        )
     );
     TestCase.assertEquals(
         "3F-80-00-00",
-        VectorFormatterByteBuffer.bytesToHuman(ImmutableVector.of(1, 2, 3), VectorFormatter.CoordinateOrder.X_ONLY)
+        VectorFormatterByteBuffer.bytesToHuman(
+            ImmutableVector.of(1, 2, 3),
+            VectorFormatter.CoordinateOrder.X_ONLY
+        )
     );
 
     TestCase.assertEquals("1.000;0.000;-3.500", VectorStringUtils.toCsvLine(ImmutableVector.of(1, 0, -3.5)));
-    TestCase.assertEquals(Optional.of(ImmutableVector.of(1, 0, -3.5)), VectorStringUtils.fromCsvLine("1.000;0.000;-3.500"));
+    TestCase.assertEquals(
+        Optional.of(ImmutableVector.of(1, 0, -3.5)),
+        VectorStringUtils.fromCsvLine("1.000;0.000;-3.500")
+    );
     TestCase.assertEquals(
         """
             1.000;0.000;-3.500
             2.000;1.000;-7.000
             3.000;-15.000;2.500
-            """, VectorStringUtils.csvDump(List.of(
-                ImmutableVector.of(1, 0, -3.5),
-                ImmutableVector.of(2, 1, -7),
-                ImmutableVector.of(3, -15, 2.5)
-        )));
-        TestCase.assertEquals(
+            """,
+        VectorStringUtils.csvDump(List.of(
+            ImmutableVector.of(1, 0, -3.5),
+            ImmutableVector.of(2, 1, -7),
+            ImmutableVector.of(3, -15, 2.5)
+        ))
+    );
+    TestCase.assertEquals(
         """
             1.000;0.000;-3.500
             2.000;1.000;-7.000
             3.000;-15.000;2.500
-            """, VectorStringUtils.csvDumpStream(List.of(
-                ImmutableVector.of(1, 0, -3.5),
-                ImmutableVector.of(2, 1, -7),
-                ImmutableVector.of(3, -15, 2.5)
-        )));
-
-    VectorStringUtils.csvDump(
-        Stream
-            .generate(ImmutableVector::random)
-            .limit(1_000)
-            .collect(Collectors.toList())
+            """,
+        VectorStringUtils.csvDumpStream(List.of(
+            ImmutableVector.of(1, 0, -3.5),
+            ImmutableVector.of(2, 1, -7),
+            ImmutableVector.of(3, -15, 2.5)
+        ))
     );
 
-    VectorStringUtils.csvDumpStream(
-        Stream
-            .generate(ImmutableVector::random)
-            .limit(1_000)
-            .collect(Collectors.toList())
-    );
+    VectorStringUtils.csvDump(Stream.generate(ImmutableVector::random).limit(1_000).collect(Collectors.toList()));
 
-    System.out.println(
-        VectorStringUtils.prettyTable(
-            Stream
-                .generate(ImmutableVector::random)
-                .limit(10)
-                .collect(Collectors.toList()
-            )
-    ));
+    VectorStringUtils.csvDumpStream(Stream.generate(ImmutableVector::random).limit(1_000).collect(Collectors.toList()));
+
+    System.out.println(VectorStringUtils.prettyTable(Stream
+                                                         .generate(ImmutableVector::random)
+                                                         .limit(10)
+                                                         .collect(Collectors.toList())));
 }
 
 private static void lesson4() {
@@ -175,6 +175,7 @@ void main(String[] args) {
         case "lesson2", "2", "objects" -> lesson2();
         case "lesson3", "3", "vector" -> lesson3();
         case "lesson4", "4" -> lesson4();
+        case "inventory", "i" -> Cli.main(args);
         case "all" -> {
             lesson1();
             lesson2();
