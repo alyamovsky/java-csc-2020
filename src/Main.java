@@ -1,16 +1,16 @@
 import edu.TestCase;
-import edu.lesson1.syntax.OverflowException;
-import edu.lesson1.syntax.PrimitiveToolbox;
-import edu.lesson2.objects.Car;
-import edu.lesson2.objects.Lesson2;
-import edu.lesson2.objects.Point;
-import edu.lesson2.objects.named.Group;
-import edu.lesson2.objects.named.Named;
-import edu.lesson2.objects.named.User;
-import edu.lesson3.vector.*;
-import edu.lesson4.inventory.core.box.ImmutableBox;
-import edu.lesson4.inventory.core.box.MutableBox;
-import edu.lesson4.inventory.ui.Cli;
+import edu.lesson2.syntax.OverflowException;
+import edu.lesson2.syntax.PrimitiveToolbox;
+import edu.lesson3.objects.Car;
+import edu.lesson3.objects.Lesson2;
+import edu.lesson3.objects.Point;
+import edu.lesson3.objects.named.Group;
+import edu.lesson3.objects.named.Named;
+import edu.lesson3.objects.named.User;
+import edu.lesson4.vector.*;
+import edu.lesson5.inventory.core.box.ImmutableBox;
+import edu.lesson5.inventory.core.box.MutableBox;
+import edu.lesson5.inventory.ui.Cli;
 
 private static void lesson1() {
     var toolbox = new PrimitiveToolbox();
